@@ -1,18 +1,49 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
-// Update state with changes to inputs
-const onChangeHandler = e => {
-  this.setState({
-    [e.target.name]: e.target.value
-  });
-};
-
 class Login extends Component {
+  state = {
+    email: "",
+    password: ""
+  };
+
+  // Update state with changes to inputs
+  onChangeHandler = e => {
+    this.setState({
+      [e.target.name]: e.target.value
+    });
+  };
+
+  async handleSubmit(e) {
+    e.preventDefault();
+    await fetch("http://localhost:4000", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      },
+      credentials: "include",
+      body: JSON.stringify({
+        query: `mutation {
+        signin(email: "${this.state.email}", password: "${
+          this.state.password
+        }") {
+          id
+          email
+        }
+      }`
+      })
+    });
+    this.props.history.push("/dashboard");
+  }
+
   render() {
     return (
       <div>
-        <form method="post" onChange={e => this.onChangeHandler(e)}>
+        <form
+          method="post"
+          onChange={e => this.onChangeHandler(e)}
+          onSubmit={e => this.handleSubmit(e)}>
           <label>Email: </label>
           <input type="text" id="email" name="email" />
           <br />
