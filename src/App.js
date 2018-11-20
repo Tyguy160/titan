@@ -11,6 +11,7 @@ import {
 import Signup from "./components/Signup";
 import Login from "./components/Login";
 import Dashboard from "./components/Dashboard";
+import PropertyDetails from "./components/PropertyDetails";
 
 class App extends Component {
   render() {
@@ -26,6 +27,7 @@ class App extends Component {
           <Route exact path="/" component={Login} />
           <Route path="/signup" component={Signup} />
           <Route path="/dashboard" component={Dashboard} />
+          <Route path="/property" component={PropertyDetails} />
         </div>
       </Router>
     );
